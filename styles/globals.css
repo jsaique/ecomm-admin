@@ -22,11 +22,15 @@ label {
 }
 
 .btn-primary {
-  @apply bg-gradient-to-r from-cyan-500 to-teal-500 active:bg-teal-800 py-1 px-2 rounded-md;
+  @apply bg-gradient-to-r from-cyan-500 to-teal-500 active:bg-teal-800 py-1 px-2 rounded-md shadow-xl;
+}
+
+.btn-danger {
+  @apply bg-gradient-to-r from-red-500 to-amber-500 active:bg-teal-800 py-1 px-2 rounded-md shadow-xl;
 }
 
 table.basic {
-  @apply w-full;
+  @apply w-full shadow-xl;
 }
 
 table.basic thead tr td {
@@ -38,5 +42,5 @@ table.basic tr td {
 }
 
 table.basic a {
-  @apply bg-gradient-to-r from-cyan-500 to-teal-500 text-sm py-1 px-2 rounded-md inline-flex gap-1 items-center;
+  @apply text-sm py-1 px-2 rounded-md inline-flex gap-1 items-center mr-1;
 }

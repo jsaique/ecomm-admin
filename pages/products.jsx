@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 export default function Products() {
   const [products, setProduct] = useState([]);
@@ -18,7 +18,7 @@ export default function Products() {
       <Link href={"/products/new"} className="btn-primary">
         Add new product
       </Link>
-      <table className="basic mt-2 ">
+      <table className="basic mt-2">
         <thead>
           <tr>
             <td>Product name</td>
@@ -27,11 +27,20 @@ export default function Products() {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr>
+            <tr key={product._id}>
               <td>{product.title}</td>
               <td>
-                <Link href={"/products/edit/" + product._id}>
+                <Link
+                  className="btn-primary"
+                  href={"/products/edit/" + product._id}
+                >
                   <BsPencilSquare /> Edit
+                </Link>
+                <Link
+                  className="btn-danger"
+                  href={"/products/delete/" + product._id}
+                >
+                  <BsTrash /> Delete
                 </Link>
               </td>
             </tr>

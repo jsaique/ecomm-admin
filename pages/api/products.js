@@ -19,4 +19,11 @@ export default async function handle(req, res) {
     const productData = await Product.create({ title, price, description });
     res.json(productData);
   }
+  // Update the product
+  if (method === "PUT") {
+    const { title, price, description, _id } = req.body;
+    // _id is the filter, 2nd parameter is what to update
+    await Product.updateOne({ _id }, { title, price, description });
+    res.json(true);
+  }
 }
