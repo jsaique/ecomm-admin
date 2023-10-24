@@ -28,7 +28,6 @@ export default async function handle(req, res) {
   }
   // Delete the product
   if (method === "DELETE") {
-    c;
     if (req.query?.id) {
       await Product.deleteOne({ _id: req.query.id });
       res.json(true);

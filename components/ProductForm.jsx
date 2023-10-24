@@ -2,12 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { BsUpload } from "react-icons/bs";
 
 export default function ProductForm({
   _id,
   title: currentTitle,
   price: currentPrice,
   description: currentDescription,
+  images,
 }) {
   const [title, setTitle] = useState(currentTitle || "");
   const [description, setDescription] = useState(currentDescription || "");
@@ -32,6 +34,19 @@ export default function ProductForm({
     router.push("/products");
   }
 
+  const uploadImages = async function (e) {
+    const files = e.target?.files;
+    if (files?.length > 0) {
+      const data = new FormData(); // Gathering our data
+
+      for (const file of files) {
+        data.append("file", file);
+      }
+      const res = await axios.post("/api/upload", data);
+      console.log(res.data);
+    }
+  };
+
   return (
     <form onSubmit={handleSaveProduct}>
       <label>Product name</label>
@@ -41,6 +56,17 @@ export default function ProductForm({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <label>Photos</label>
+      <div className="mb-2">
+        <label className="w-24 h-24 flex text-center items-center justify-center gap-1 text-sm rounded-lg bg-stone-300 cursor-pointer">
+          <BsUpload />
+          <div>Upload</div>
+          <input onChange={uploadImages} type="file" className="hidden" />
+        </label>
+        {!images?.length && (
+          <div className="text-red-600">No photos in this product</div>
+        )}
+      </div>
       <label>Price (USD)</label>
       <input
         type="number"
