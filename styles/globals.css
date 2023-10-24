@@ -21,12 +21,17 @@ label {
   @apply text-stone-800;
 }
 
+.btn-primary,
+.btn-danger {
+  @apply py-1 px-4 rounded-md shadow-xl;
+}
+
 .btn-primary {
-  @apply bg-gradient-to-r from-cyan-500 to-teal-500 active:bg-teal-800 py-1 px-2 rounded-md shadow-xl;
+  @apply bg-gradient-to-r from-cyan-500 to-teal-500 active:bg-teal-800;
 }
 
 .btn-danger {
-  @apply bg-gradient-to-r from-red-500 to-amber-500 active:bg-teal-800 py-1 px-2 rounded-md shadow-xl;
+  @apply bg-gradient-to-r from-red-500 to-amber-500 active:bg-teal-800;
 }
 
 table.basic {
