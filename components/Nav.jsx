@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { BiStore } from "react-icons/bi";
-import { AiOutlineHome } from "react-icons/ai";
+import {
+  AiOutlineHome,
+  AiOutlineUnorder,
+  AiOutlineUnorderedList,
+} from "react-icons/ai";
 import { BiCog } from "react-icons/bi";
 import { BsViewList } from "react-icons/bs";
 import { VscPackage } from "react-icons/vsc";
@@ -32,6 +36,14 @@ export default function Nav() {
           className={pathname.includes("/products") ? activeLink : inactiveLink}
         >
           <VscPackage /> Products
+        </Link>
+        <Link
+          href={"/categories"}
+          className={
+            pathname.includes("/categories") ? activeLink : inactiveLink
+          }
+        >
+          <AiOutlineUnorderedList /> Categories
         </Link>
         <Link
           href={"/orders"}
