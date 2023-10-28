@@ -15,20 +15,24 @@ export default async function handle(req, res) {
   }
   // Creating/Upload the product
   if (method === "POST") {
-    const { title, price, description, images } = req.body;
+    const { title, price, description, images, category } = req.body;
     const productData = await Product.create({
       title,
       price,
       description,
       images,
+      category,
     });
     res.json(productData);
   }
   // Insert/Update the product
   if (method === "PUT") {
-    const { title, price, description, images, _id } = req.body;
+    const { title, price, description, images, category, _id } = req.body;
     // _id is the filter, 2nd parameter is what to update
-    await Product.updateOne({ _id }, { title, price, description, images });
+    await Product.updateOne(
+      { _id },
+      { title, price, description, images, category }
+    );
     res.json(true);
   }
   // Delete the product

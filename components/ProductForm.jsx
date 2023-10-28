@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { BsUpload } from "react-icons/bs";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import { goBack } from "@/lib/util";
 
 export default function ProductForm({
   _id,
@@ -12,19 +12,28 @@ export default function ProductForm({
   price: currentPrice,
   description: currentDescription,
   images: currentImages,
+  category: assignedCategory,
 }) {
   const [title, setTitle] = useState(currentTitle || "");
   const [images, setImages] = useState(currentImages || []);
+  const [category, setCategory] = useState(assignedCategory || "");
   const [price, setPrice] = useState(currentPrice || "");
   const [description, setDescription] = useState(currentDescription || "");
   const [goToProduct, setGoToProduct] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [categories, setCategories] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    axios.get("/api/categories").then((result) => {
+      setCategories(result.data);
+    });
+  }, []);
 
   const handleSaveProduct = async function (e) {
     e.preventDefault();
     // If theres an_id Update product if thers none Create
-    const data = { title, price, description, images };
+    const data = { title, price, description, images, category };
     if (_id) {
       // Update
       await axios.put("/api/products", { ...data, _id });
@@ -59,6 +68,10 @@ export default function ProductForm({
     setImages(images);
   };
 
+  const handleGoBack = function () {
+    goBack(router, "/products");
+  };
+
   return (
     <form onSubmit={handleSaveProduct}>
       <label>Product name</label>
@@ -68,6 +81,12 @@ export default function ProductForm({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <label>Category</label>
+      <select onChange={(e) => setCategory(e.target.value)} value={category}>
+        <option value="">Uncategorized</option>
+        {categories.length > 0 &&
+          categories.map((c) => <option value={c._id}>{c.name}</option>)}
+      </select>
       <label>Photos</label>
       <div className="mb-2 flex flex-wrap gap-2">
         <ReactSortable
@@ -110,9 +129,9 @@ export default function ProductForm({
         <button className="btn-primary" type="submit">
           Save
         </button>
-        <Link className="btn-primary" href={"/products"}>
+        <button onClick={handleGoBack} className="btn-primary" type="button">
           Cancel
-        </Link>
+        </button>
       </div>
     </form>
   );
