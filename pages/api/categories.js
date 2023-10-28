@@ -30,4 +30,10 @@ export default async function handleCategories(req, res) {
     );
     res.json(categoryData);
   }
+
+  if (method === "DELETE") {
+    const { _id } = req.query;
+    await Category.deleteOne({ _id });
+    res.json("ok");
+  }
 }
