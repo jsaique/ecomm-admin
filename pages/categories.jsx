@@ -22,7 +22,13 @@ const Categories = function ({ swal }) {
 
   const saveCategory = async function (e) {
     e.preventDefault();
-    const data = { name };
+    const data = {
+      name,
+      properties: properties.map((p) => ({
+        name: p.name,
+        values: p.values.split(","),
+      })),
+    };
     if (parentCategory !== "0") {
       data.parentCategory = parentCategory;
     }
@@ -34,6 +40,8 @@ const Categories = function ({ swal }) {
       await axios.post("/api/categories", data);
     }
     setName("");
+    setParentCategory("");
+    setProperties([]);
     fetchCategories();
   };
 
@@ -41,6 +49,12 @@ const Categories = function ({ swal }) {
     setEditedCategory(category);
     setName(category.name);
     setParentCategory(category.parent?._id);
+    setProperties(
+      category.properties.map(({ name, values }) => ({
+        name,
+        values: values.join(","),
+      }))
+    );
   };
 
   const deleteCategory = function (category) {
@@ -169,6 +183,7 @@ const Categories = function ({ swal }) {
                 setEditedCategory(null);
                 setName("");
                 setParentCategory("");
+                setProperties([]);
               }}
               className="btn-primary"
               type="button"
