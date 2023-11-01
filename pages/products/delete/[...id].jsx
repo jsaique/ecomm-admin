@@ -10,12 +10,12 @@ export default function DeleteProduct() {
   const { id } = router.query;
 
   const handleGoBack = () => {
-    goBack(router);
+    goBack(router, "/products");
   };
 
   const handleDeleteProduct = async () => {
     await axios.delete("/api/products?id=" + id);
-    goBack(router);
+    goBack(router, "/products");
   };
 
   useEffect(() => {

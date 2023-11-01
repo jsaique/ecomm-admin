@@ -117,20 +117,26 @@ export default function ProductForm({
       <select onChange={(e) => setCategory(e.target.value)} value={category}>
         <option value="">Uncategorized</option>
         {categories.length > 0 &&
-          categories.map((c) => <option value={c._id}>{c.name}</option>)}
+          categories.map((c) => (
+            <option key={c._id} value={c._id}>
+              {c.name}
+            </option>
+          ))}
       </select>
       {/* Check if category have a parent  */}
       {propertiesToFill.length > 0 &&
         propertiesToFill.map((property) => (
           <div className="flex gap-1">
-            <div>{property.name}</div>
+            <div key={property._id}>{property.name}</div>
             <select
               onChange={(e) => setProductProp(property.name, e.target.value)}
               type="text"
               value={productProperties[property.name]}
             >
               {property.values.map((value) => (
-                <option value={value}>{value}</option>
+                <option key={property._id} value={value}>
+                  {value}
+                </option>
               ))}
             </select>
           </div>

@@ -1,9 +1,8 @@
 import Layout from "@/components/Layout";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
-  if (!session) return;
 
   return (
     <Layout>
@@ -15,7 +14,7 @@ export default function Home() {
             alt="avatar"
             className="w-6 h-6 rounded-full"
           />
-          <span className="px-2">{/* {session?.user?.name} */}</span>
+          <span className="px-2">{session?.user?.name}</span>
         </div>
       </div>
     </Layout>
