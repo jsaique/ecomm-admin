@@ -1,8 +1,16 @@
 import Nav from "@/components/Nav";
 import { useSession, signIn } from "next-auth/react";
+import { useState } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Logo from "@/components/Logo";
 
 export default function Layout({ children }) {
   const { data: session } = useSession();
+  const [showNav, setShowNav] = useState(false);
+
+  const onClose = () => {
+    setShowNav(!showNav);
+  };
 
   if (!session) {
     return (
@@ -19,10 +27,18 @@ export default function Layout({ children }) {
     );
   }
   return (
-    <div className="flex bg-gradient-to-b from-teal-500 min-h-screen">
-      <Nav />
-      <div className="flex-grow bg-slate-200 mt-2 mr-2 mb-2 rounded-lg p-4">
-        {children}
+    <div className="bg-gradient-to-b from-teal-500 min-h-screen">
+      <div className="flex items-center md:hidden p-4">
+        <button onClick={() => setShowNav(true)}>
+          <GiHamburgerMenu />
+        </button>
+        <div className="flex grow justify-center mr-6">
+          <Logo />
+        </div>
+      </div>
+      <div className="flex">
+        <Nav show={showNav} onClose={onClose} />
+        <div className="flex-grow p-4">{children}</div>
       </div>
     </div>
   );

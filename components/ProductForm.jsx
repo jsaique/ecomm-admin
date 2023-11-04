@@ -126,19 +126,23 @@ export default function ProductForm({
       {/* Check if category have a parent  */}
       {propertiesToFill.length > 0 &&
         propertiesToFill.map((property) => (
-          <div className="flex gap-1">
-            <div key={property._id}>{property.name}</div>
-            <select
-              onChange={(e) => setProductProp(property.name, e.target.value)}
-              type="text"
-              value={productProperties[property.name]}
-            >
-              {property.values.map((value) => (
-                <option key={property._id} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
+          <div className="">
+            <label key={property._id}>
+              {`${property.name[0].toUpperCase()}${property.name.substring(1)}`}
+            </label>
+            <div>
+              <select
+                onChange={(e) => setProductProp(property.name, e.target.value)}
+                type="text"
+                value={productProperties[property.name]}
+              >
+                {property.values.map((value) => (
+                  <option key={property._id} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         ))}
       <label>Photos</label>
@@ -150,7 +154,10 @@ export default function ProductForm({
         >
           {!!images?.length &&
             images.map((link) => (
-              <div key={link} className="h-24">
+              <div
+                key={link}
+                className="h-24 p-4 bg-stone-200 shadow-sm rounded-sm border border-stone-200"
+              >
                 <img src={link} alt="" className="rounded-md"></img>
               </div>
             ))}
@@ -160,7 +167,7 @@ export default function ProductForm({
             <Spinner />
           </div>
         )}
-        <label className="w-24 h-24 flex text-center items-center justify-center gap-1 text-sm rounded-lg bg-stone-300 cursor-pointer">
+        <label className="w-24 h-24 flex text-center items-center justify-center gap-1 text-sm rounded-sm bg-stone-300 shadow-sm cursor-pointer">
           <BsUpload />
           <div>Upload</div>
           <input onChange={uploadImages} type="file" className="hidden" />
