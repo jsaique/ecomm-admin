@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BiStore } from "react-icons/bi";
 import {
   AiOutlineHome,
   AiOutlineUnorderedList,
@@ -40,7 +39,7 @@ export default function Nav({ show, onClose }) {
           <AiOutlineClose />
         </button>
       </div>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 w-32">
         <Link
           href={"/"}
           className={pathname === "/" ? activeLink : inactiveLink}

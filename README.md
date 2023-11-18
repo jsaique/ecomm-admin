@@ -1,4 +1,4 @@
-## e-Commerce website
+## eCommerce website admin
 
 Buit with
 

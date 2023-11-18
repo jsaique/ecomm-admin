@@ -200,9 +200,9 @@ const Categories = function ({ swal }) {
         <table className="basic mt-4">
           <thead>
             <tr>
-              <td>Name</td>
-              <td>Category</td>
-              <td></td>
+              <th>Name</th>
+              <th>Category</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

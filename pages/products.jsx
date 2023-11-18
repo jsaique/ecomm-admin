@@ -21,8 +21,8 @@ export default function Products() {
       <table className="basic mt-4">
         <thead>
           <tr>
-            <td>Product name</td>
-            <td></td>
+            <th>Product name</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
