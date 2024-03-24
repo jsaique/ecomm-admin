@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -33,6 +34,7 @@ export default function Orders() {
                 </td>
                 <td>
                   {order.name}
+                  <br />
                   {order.email}
                   <br />
                   {order.address} <br />
