@@ -1,14 +1,18 @@
 /* eslint-disable react/jsx-key */
 import Layout from "@/components/Layout";
+import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get("/api/orders").then((response) => {
       setOrders(response.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -25,6 +29,15 @@ export default function Orders() {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td colSpan={4}>
+              {isLoading && (
+                <div className="p-2">
+                  <Spinner fullWidth={true} />
+                </div>
+              )}
+            </td>
+          </tr>
           {orders.length > 0 &&
             orders.map((order) => (
               <tr>

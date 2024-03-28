@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -26,11 +28,14 @@ export default function ProductForm({
   const [goToProduct, setGoToProduct] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setCategoriesLoading(true);
     axios.get("/api/categories").then((result) => {
       setCategories(result.data);
+      setCategoriesLoading(false);
     });
   }, []);
 
@@ -124,10 +129,11 @@ export default function ProductForm({
           ))}
       </select>
       {/* Check if category have a parent  */}
+      {categoriesLoading && <Spinner />}
       {propertiesToFill.length > 0 &&
         propertiesToFill.map((property) => (
-          <div className="">
-            <label key={property._id}>
+          <div key={property._id}>
+            <label>
               {`${property.name[0].toUpperCase()}${property.name.substring(1)}`}
             </label>
             <div>
@@ -136,8 +142,8 @@ export default function ProductForm({
                 type="text"
                 value={productProperties[property.name]}
               >
-                {property.values.map((value) => (
-                  <option key={property._id} value={value}>
+                {property.values.map((value, index) => (
+                  <option key={`${property._id}-${index}`} value={value}>
                     {value}
                   </option>
                 ))}

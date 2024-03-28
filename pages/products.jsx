@@ -3,13 +3,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
+import Spinner from "@/components/Spinner";
 
 export default function Products() {
   const [products, setProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   //Fetching the products from mongodb
   useEffect(() => {
+    setIsLoading(true);
     axios.get("/api/products").then((response) => {
       setProduct(response.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -26,6 +30,15 @@ export default function Products() {
           </tr>
         </thead>
         <tbody>
+          {isLoading && (
+            <tr>
+              <td colSpan={2}>
+                <div className="py-4">
+                  <Spinner fullWidth={true} />
+                </div>
+              </td>
+            </tr>
+          )}
           {products.map((product) => (
             <tr key={product._id}>
               <td>{product.title}</td>

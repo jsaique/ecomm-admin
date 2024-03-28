@@ -7,6 +7,7 @@ import {
 import { BiCog, BiLogOut } from "react-icons/bi";
 import { BsViewList } from "react-icons/bs";
 import { VscPackage } from "react-icons/vsc";
+import { FiUsers } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import Logo from "@/components/Logo";
@@ -65,6 +66,12 @@ export default function Nav({ show, onClose }) {
           className={pathname.includes("/orders") ? activeLink : inactiveLink}
         >
           <BsViewList /> Orders
+        </Link>
+        <Link
+          href={"/admins"}
+          className={pathname.includes("/admins") ? activeLink : inactiveLink}
+        >
+          <FiUsers /> Admins
         </Link>
         <Link
           href={"/settings"}
