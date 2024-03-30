@@ -7,44 +7,50 @@ import { withSwal } from "react-sweetalert2";
 function SettingsPage({ swal }) {
   const [products, setProducts] = useState([]);
   const [featuredProductId, setFeaturedProductId] = useState("");
-  const [isLoadingProduct, setIsLoadingProduct] = useState(false);
-  const [isLoadingFeaturedProduct, setIsLoadingFeaturedProduct] =
-    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shippingFee, setShippingFee] = useState("");
 
   useEffect(() => {
-    setIsLoadingProduct(true);
-    axios.get("/api/products").then((res) => {
-      setProducts(res.data);
-      setIsLoadingProduct(false);
-    });
-    setIsLoadingFeaturedProduct(true);
-    axios.get("/api/settings?name=featuredProductId").then((res) => {
-      setFeaturedProductId(res.data.value);
-      setIsLoadingFeaturedProduct(false);
+    setIsLoading(true);
+    fetchAll().then(() => {
+      setIsLoading(false);
     });
   }, []);
 
+  async function fetchAll() {
+    await axios.get("/api/products").then((res) => {
+      setProducts(res.data);
+    });
+    await axios.get("/api/settings?name=featuredProductId").then((res) => {
+      setFeaturedProductId(res.data.value);
+    });
+    await axios.get("/api/settings?name=shippingFee").then((res) => {
+      setShippingFee(res.data?.value);
+    });
+  }
+
   async function saveSettings() {
-    await axios
-      .put("/api/settings", {
-        name: "featuredProductId",
-        value: featuredProductId,
-      })
-      .then(() => {
-        swal.fire({
-          title: "Settings saved!",
-          icon: "success",
-        });
-      });
+    setIsLoading(true);
+    await axios.put("/api/settings", {
+      name: "featuredProductId",
+      value: featuredProductId,
+    });
+    await axios.put("/api/settings", {
+      name: "shippingFee",
+      value: shippingFee,
+    });
+    setIsLoading(false);
+    await swal.fire({
+      title: "Settings saved!",
+      icon: "success",
+    });
   }
 
   return (
     <Layout>
       <h1>Settings</h1>
-      {(isLoadingProduct || isLoadingFeaturedProduct) && (
-        <Spinner fullWidth={true} />
-      )}
-      {!isLoadingProduct && !isLoadingFeaturedProduct && (
+      {isLoading && <Spinner fullWidth={true} />}
+      {!isLoading && (
         <>
           <label>Featured product</label>
           <select
@@ -58,6 +64,12 @@ function SettingsPage({ swal }) {
                 </option>
               ))}
           </select>
+          <label>Shipping price (USD)</label>
+          <input
+            type="number"
+            value={shippingFee}
+            onChange={(e) => setShippingFee(e.target.value)}
+          />
           <div>
             <button onClick={saveSettings} className="btn-primary">
               Save
