@@ -36,9 +36,11 @@ export default function Nav({ show, onClose }) {
         <div className="mb-4 mr-4">
           <Logo />
         </div>
-        <button onClick={onClose} type="button">
-          <AiOutlineClose />
-        </button>
+        <div className="sm:hidden">
+          <button onClick={onClose} type="button">
+            <AiOutlineClose />
+          </button>
+        </div>
       </div>
       <nav className="flex flex-col gap-2 w-32">
         <Link
