@@ -30,7 +30,7 @@ export default function DeleteProduct() {
   return (
     <Layout>
       <h1 className="text-center mt-8">
-        Do you really want to delete "{productInfo?.title}"?
+        Do you really want to delete &quot;{productInfo?.title}&qout;&quest;
       </h1>
       <div className="flex gap-2 justify-center items-center">
         <button onClick={handleDeleteProduct} className="btn-danger">
